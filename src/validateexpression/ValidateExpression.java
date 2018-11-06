@@ -40,47 +40,33 @@ public class ValidateExpression {
         System.out.println("Enter the closing character to validate");
         closingChar = input.next().charAt(0);
         
-       
         for(int i = 0; i < expression.length();i++)  { // start of for loop
             if (openingChar == (expression.charAt(i))) {
                 stack.push("character occurance");
-//                System.out.println(stack);
-                       
-            
             } else {
                 
             }
             
             if (closingChar == expression.charAt(i)) {
-            
                 try {
                     stack.pop();
                 }
-                
                 catch (EmptyStackException e) {
                     System.out.println("Expression is incorrect. Too many closing characters");
                     validExpression = false;
                     break;
                 }
             }
-            
-            
-            
         } // end of for loop
-        
-        
+
         if (stack.isEmpty() && validExpression == true){
                 System.out.println("Valid expression");
-            }
-        else if (stack.isEmpty() && validExpression == false) {
-                
         }
-        
+        else if (stack.isEmpty() && validExpression == false) {
+                // do nothing
+        }
         else {
             System.out.println("Expression is incorrect. Too many opening characters");
         }
-    }
-    
-    
-    
+    } 
 }
