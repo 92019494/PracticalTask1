@@ -19,6 +19,7 @@ import java.util.Scanner;
  */
 public class Patient {
     
+    // declaring variables
     public String patientID;
     public String name;
     public String checkInDate;
@@ -33,23 +34,52 @@ public class Patient {
             this.doctor = doctor;
     }
     
-    @Override
-    public String toString(){
-        return ("Patient ID: [" + this.patientID + "]\n" 
-                + "Name: [" + this.name + "]\n" 
-                + "Check In Date [" + this.checkInDate + "]\n" 
-                + "Assigned Medical Personnel [" + this.doctor + "]");
+    // setter and getters for variables
+    public String getPatientID() {
+        return patientID;
     }
     
+    public void setPatientID(String ID){
+        this.patientID = ID;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name){
+        this.name = name;
+    }
+    
+    public String getCheckInDate() {
+        return checkInDate;
+    }
+    
+    public void setCheckInDate(String checkIn){
+        this.checkInDate = checkIn;
+    }
+    
+    public String getDoctor() {
+        return doctor;
+    }
+    
+    public void setDoctor(String doctor){
+        this.doctor = doctor;
+    }
+    
+    
+    @Override
+    public String toString(){
+        return ("Patient ID: [" + this.getPatientID() + "]\n" 
+                + "Name: [" + this.getName() + "]\n" 
+                + "Check In Date [" + this.getCheckInDate() + "]\n" 
+                + "Assigned Medical Personnel [" + this.getDoctor() + "]");
+    }
 
- 
+    
 public static void main(String[] args){
 
     
-
-        
-    
-        
         String path = "ListOfPatients.txt"; 
         //Use path to the ListOfPatients.txt here
         LineNumberReader lr = null; 
@@ -61,7 +91,6 @@ public static void main(String[] args){
         try {     
         
         
-        
         //using try-catch for exception handling to catch 
         //possible errors with i/o operations
         FileReader inputStream = new FileReader(path); 
@@ -71,12 +100,11 @@ public static void main(String[] args){
         String str;
         
         while((str = lr.readLine())!= null) {  // start of first while loop
-        //while the next line exists
-        oneRecord = str.split(",");  
-        //dividing one file line by commas and assigning to array
-        pat = new Patient(oneRecord[0], oneRecord[1], 
-        oneRecord[2], oneRecord[3]); 
         
+        oneRecord = str.split(","); //while the next line exists
+ 
+        pat = new Patient(oneRecord[0], oneRecord[1], 
+        oneRecord[2], oneRecord[3]); //dividing one file line by commas and assigning to array
         
         patientList.add(pat);//adding patient to the ArrayList
  
@@ -87,39 +115,34 @@ public static void main(String[] args){
             System.out.println("IOExcception occured");
         }
        
-       
-       
+        // initializing the variables needed
         String searchOrExit = null;
         String inputID = null;
         String deleteRecord = null;
+        boolean recordFound = false;
         Scanner input = new Scanner(System.in);
         
         while(!"E".equals(searchOrExit)){ // start of second while loop
-        System.out.println("Press S for search, Press E for exit");
-        searchOrExit = input.next().toUpperCase();
+            System.out.println("Press S for search, Press E for exit");
+            searchOrExit = input.next().toUpperCase();
+        
         if("S".equals(searchOrExit) ){ // start of if statement
             System.out.println("Enter patient ID to search");
             inputID = input.next().toUpperCase();
-            if (!patientList.get(1).toString().contains(inputID)){
-                System.out.println("There is no existing record.");
-            }
+
             for (int i = 0; i < patientList.size(); i++) { // start of for loop
                 
-                if (patientList.get(i).toString().contains(inputID)){
-                System.out.println(patientList.get(i));
-                System.out.println("Would you like to remove the patients record(s)?");
-                System.out.println("Y or N?");
-                
+                if (patientList.get(i).getPatientID().equals(inputID)){
+                    System.out.println(patientList.get(i));
+                    System.out.println("Would you like to remove the patients record(s)?");
+                    System.out.println("Y or N?");
+                    recordFound = true;
                
                 while(!"Y".equals(deleteRecord) || !"N".equals(deleteRecord)){ // start of third while loop
                     deleteRecord = input.next().toUpperCase();
-                    if ("Y".equals(deleteRecord))
-                    {
+                    if ("Y".equals(deleteRecord)){
                         patientList.remove(i);
-                        System.out.println(patientList);
-                        System.out.println("");
-                        System.out.println("Record(s) successfully removed");
-                        System.out.println("");
+                        System.out.println("\nRecord(s) successfully removed\n");
                         break;
                     }
                     else if ("N".equals(deleteRecord)) {
@@ -133,34 +156,23 @@ public static void main(String[] args){
             
                 } // end of third while loop
                 }
-             
-            
                 
-                
-                
-                
-                
-                
-                
+                else{
+                    recordFound = false;
+                }
+              
             } // end of for loop 
-            
-            
-            
-            
 
-           
             
-            
+            if (recordFound == false){
+                System.out.println("There is no existing record.\n");
+            }
             
         } //end of if statement
         else if("E".equals(searchOrExit)){
             System.out.println("Bye");
             break;
         }
-      
-        
-        
-                } // end of second while loop
-        
-     }
+        } // end of second while loop
+}
 }
